@@ -1,68 +1,92 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Connect Four</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <table id="board">
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-    <!-- <script src="script.js"></script> -->
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Connect Four</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="gameOver.css">
+  <link rel="stylesheet" href="score.css">
+</head>
+
+<body>
+  <div id="scores">
+    <div class="player-score" id="red_score">
+      <h2>Player 1</h2>
+      <p id="player1-score" class="score-display">0</p>
+    </div>
+    <div class="player-score" id="yellow_score">
+      <h2>Player 2</h2>
+      <p id="player2-score" class="score-display">0</p>
+    </div>
+  </div>
+
+
+  <table id="board">
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <div id="winnerScreen" style="display: none;">
+    <h2 id="winnerMessage"></h2>
+    <button id="playAgainButton">Play Again</button>
+  </div>
+
+
+  <!-- <script src="script.js"></script> -->
+  <script src="script.js"></script>
+</body>
+
 </html>

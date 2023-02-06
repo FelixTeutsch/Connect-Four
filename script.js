@@ -1,9 +1,17 @@
 const board = document.querySelector('#board');
 let currentPlayer = 'red';
 
+let player1Score = 0;
+let player2Score = 0;
+
+let player1ScoreDisplay = document.querySelector("#player1-score");
+let player2ScoreDisplay = document.querySelector("#player2-score");
+
+
+
 board.addEventListener('click', event => {
     const col = event.target.cellIndex;
-    if (col === -1) {
+    if (col === -1 || col === undefined) {
         return;
     }
 
@@ -12,7 +20,7 @@ board.addEventListener('click', event => {
             !board.rows[i].cells[col].classList.contains('yellow')) {
             board.rows[i].cells[col].classList.add(currentPlayer);
             if (checkForWin(board, col, i)) {
-                alert(currentPlayer + ' wins!');
+                showWinnerScreen(currentPlayer);
             } else if (checkForDraw(board)) {
                 alert('Draw!');
             } else {
@@ -84,4 +92,45 @@ function checkForDraw(board) {
         }
     }
     return true;
+}
+
+
+let winnerScreen = document.getElementById("winnerScreen");
+let winnerMessage = document.getElementById("winnerMessage");
+let playAgainButton = document.getElementById("playAgainButton");
+
+playAgainButton.addEventListener("click", function () {
+    winnerScreen.style.display = "none";
+    resetBoard();
+});
+
+function showWinnerScreen(player) {
+    winnerMessage.innerHTML = "Player " + player + " wins!";
+    winnerScreen.style.display = "flex";
+
+    // Update the score
+    if (currentPlayer === "red") {
+        player1Score++;
+    } else {
+        player2Score++;
+    }
+    player1ScoreDisplay.innerHTML = player1Score;
+    player2ScoreDisplay.innerHTML = player2Score;
+}
+
+
+function resetBoard() {
+    // Reset all cells to be empty
+    for (let row = 0; row < 6; row++) {
+        for (let col = 0; col < 7; col++) {
+            board.rows[row].cells[col].classList.remove("red");
+            board.rows[row].cells[col].classList.remove("yellow");
+        }
+    }
+
+    // Reset current player
+    currentPlayer = 'red';
+
+    // Hide the winner screen
+    winnerScreen.style.display = "none";
 }
