@@ -26,4 +26,13 @@
     font-size: 18px;
     cursor: pointer;
   }
-  
+  .messageContainer {
+    background-color: rgba(40, 42, 54, 0.70);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    border-radius: 5px;
+    border: solid 5px #282a36;
+  }
