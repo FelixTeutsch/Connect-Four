@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f9f8f3;
+      }
+
+      .cls-2 {
+        fill: #ea5658;
+      }
+
+      .cls-3 {
+        fill: #44475a;
+      }
+    </style>
+  </defs>
+  <g id="Ebene_1-2" data-name="Ebene 1">
+    <circle class="cls-1" cx="50" cy="50" r="50"/>
+    <g>
+      <g>
+        <circle class="cls-3" cx="33.5" cy="33.5" r="15"/>
+        <circle class="cls-3" cx="68.5" cy="33.5" r="15"/>
+        <circle class="cls-3" cx="68.5" cy="68.5" r="15"/>
+        <circle class="cls-3" cx="33.5" cy="68.5" r="15"/>
+      </g>
+      <g>
+        <circle class="cls-2" cx="31.5" cy="31.5" r="15"/>
+        <circle class="cls-2" cx="66.5" cy="31.5" r="15"/>
+        <circle class="cls-2" cx="66.5" cy="66.5" r="15"/>
+        <circle class="cls-2" cx="31.5" cy="66.5" r="15"/>
+      </g>
+    </g>
+  </g>
+</svg>

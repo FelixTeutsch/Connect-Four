@@ -1,13 +1,21 @@
 const board = document.querySelector('#board');
-let currentPlayer = 'red';
+let currentPlayer = 'Red';
 
-let player1Score = 0;
-let player2Score = 0;
+let score = {
+    red: 0,
+    yellow: 0
+}
 
 let player1ScoreDisplay = document.querySelector("#player1-score");
 let player2ScoreDisplay = document.querySelector("#player2-score");
 
-
+window.addEventListener("load", () => {
+    loadCurrentPlayer();
+    loadScore();
+    loadGame();
+    player1ScoreDisplay.innerHTML = score.red;
+    player2ScoreDisplay.innerHTML = score.yellow;
+});
 
 board.addEventListener('click', event => {
     const col = event.target.cellIndex;
@@ -16,21 +24,29 @@ board.addEventListener('click', event => {
     }
 
     for (let i = board.rows.length - 1; i >= 0; i--) {
-        if (!board.rows[i].cells[col].classList.contains('red') &&
-            !board.rows[i].cells[col].classList.contains('yellow')) {
+        if (!board.rows[i].cells[col].classList.contains('Red') &&
+            !board.rows[i].cells[col].classList.contains('Yellow')) {
             board.rows[i].cells[col].classList.add(currentPlayer);
             if (checkForWin(board, col, i)) {
-                showWinnerScreen(currentPlayer);
+                showWinnerScreen(currentPlayer, false);
             } else if (checkForDraw(board)) {
-                alert('Draw!');
+                showWinnerScreen(currentPlayer, true);
             } else {
-                currentPlayer = (currentPlayer === 'red') ? 'yellow' : 'red';
+                changePlayer();
             }
             break;
         }
     }
 
 });
+
+function changePlayer() {
+    board.classList.remove("currentPlayer" + currentPlayer);
+    currentPlayer = (currentPlayer === 'Red') ? 'Yellow' : 'Red';
+    board.classList.add("currentPlayer" + currentPlayer);
+    saveCurrentPlayer();
+    saveGame();
+}
 
 function checkForWin(board, col, row) {
     const color = board.rows[row].cells[col].className;
@@ -86,8 +102,8 @@ function checkLine(board, col, row, colIncrement, rowIncrement, color) {
 
 function checkForDraw(board) {
     for (let i = 0; i < board.rows[0].cells.length; i++) {
-        if (!board.rows[0].cells[i].classList.contains('red') &&
-            !board.rows[0].cells[i].classList.contains('yellow')) {
+        if (!board.rows[0].cells[i].classList.contains('Red') &&
+            !board.rows[0].cells[i].classList.contains('Yellow')) {
             return false;
         }
     }
@@ -98,24 +114,40 @@ function checkForDraw(board) {
 let winnerScreen = document.getElementById("winnerScreen");
 let winnerMessage = document.getElementById("winnerMessage");
 let playAgainButton = document.getElementById("playAgainButton");
+let resetScoreButton = document.getElementById("resetScoreButton");
 
 playAgainButton.addEventListener("click", function () {
     winnerScreen.style.display = "none";
     resetBoard();
 });
 
-function showWinnerScreen(player) {
-    winnerMessage.innerHTML = "Player " + player + " wins!";
+resetScoreButton.addEventListener("click", function () {
+    score.red = 0;
+    score.yellow = 0;
+    player1ScoreDisplay.innerHTML = score.red;
+    player2ScoreDisplay.innerHTML = score.yellow;
+    saveScore();
+});
+
+function showWinnerScreen(player, draw) {
+    changePlayer();
+    deleteGame();
     winnerScreen.style.display = "flex";
+    winnerMessage.innerHTML = "Draw!";
+    if (draw)
+        return;
+    winnerMessage.innerHTML = player + " wins!";
 
     // Update the score
-    if (currentPlayer === "red") {
-        player1Score++;
+    // Since player has been swapped, the score has to be added to the other player
+    if (currentPlayer === "Yellow") {
+        score.red++;
     } else {
-        player2Score++;
+        score.yellow++;
     }
-    player1ScoreDisplay.innerHTML = player1Score;
-    player2ScoreDisplay.innerHTML = player2Score;
+    player1ScoreDisplay.innerHTML = score.red;
+    player2ScoreDisplay.innerHTML = score.yellow;
+    saveScore();
 }
 
 
@@ -123,14 +155,53 @@ function resetBoard() {
     // Reset all cells to be empty
     for (let row = 0; row < 6; row++) {
         for (let col = 0; col < 7; col++) {
-            board.rows[row].cells[col].classList.remove("red");
-            board.rows[row].cells[col].classList.remove("yellow");
+            board.rows[row].cells[col].classList.remove("Red");
+            board.rows[row].cells[col].classList.remove("Yellow");
         }
     }
-
-    // Reset current player
-    currentPlayer = 'red';
 
     // Hide the winner screen
     winnerScreen.style.display = "none";
 }
+
+
+function saveGame() {
+    localStorage.setItem("game", JSON.stringify(board.innerHTML));
+}
+
+function loadGame() {
+    const gameAsString = localStorage.getItem("game");
+    if (gameAsString) {
+        board.innerHTML = JSON.parse(gameAsString);
+        console.log("Game Loaded!");
+    }
+}
+
+function deleteGame() {
+    localStorage.removeItem("game");
+}
+
+function saveScore() {
+    localStorage.setItem("score", JSON.stringify(score));
+}
+
+function loadScore() {
+    const scoreAsString = localStorage.getItem("score");
+    if (scoreAsString) {
+        score = JSON.parse(scoreAsString);
+        console.log("Score Loaded!");
+    }
+}
+
+function saveCurrentPlayer() {
+    localStorage.setItem("currentPlayer", JSON.stringify(currentPlayer));
+}
+
+function loadCurrentPlayer() {
+    let dbCurrentPlayer = localStorage.getItem("currentPlayer");
+    if (dbCurrentPlayer) {
+        currentPlayer = JSON.parse(dbCurrentPlayer);
+        console.log("Current Player Loaded!");
+    }
+}
+
