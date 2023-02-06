@@ -11,17 +11,17 @@ board.addEventListener('click', event => {
         if (!board.rows[i].cells[col].classList.contains('red') &&
             !board.rows[i].cells[col].classList.contains('yellow')) {
             board.rows[i].cells[col].classList.add(currentPlayer);
+            if (checkForWin(board, col, i)) {
+                alert(currentPlayer + ' wins!');
+            } else if (checkForDraw(board)) {
+                alert('Draw!');
+            } else {
+                currentPlayer = (currentPlayer === 'red') ? 'yellow' : 'red';
+            }
             break;
         }
     }
 
-    if (checkForWin(board, col, i)) {
-        alert(currentPlayer + ' wins!');
-    } else if (checkForDraw(board)) {
-        alert('Draw!');
-    } else {
-        currentPlayer = (currentPlayer === 'red') ? 'yellow' : 'red';
-    }
 });
 
 function checkForWin(board, col, row) {
