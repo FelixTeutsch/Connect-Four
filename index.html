@@ -7,96 +7,125 @@
   <link rel="stylesheet" href="./style/style.css">
   <link rel="stylesheet" href="./style/gameOver.css">
   <link rel="stylesheet" href="./style/score.css">
+  <link rel="stylesheet" href="./style/rules.css">
 
 
   <link href="./img/favicon_light.svg" rel="icon" media="(prefers-color-scheme: light)">
-<link href="./img/favicon_dark.svg" rel="icon" media="(prefers-color-scheme: dark)">
+  <link href="./img/favicon_dark.svg" rel="icon" media="(prefers-color-scheme: dark)">
 
 
   <link rel="shortcut icon" href="./favicon.svg" type="image/x-icon">
 </head>
 
 <body>
-  <div id="scores">
-    <div class="player-score" id="red_score">
-      <h2>Player 1</h2>
-      <p id="player1-score" class="score-display">0</p>
+
+  <div id="buttonArea">
+    <button id="newGame">New Game</button>
+    <button id="continueGame" style="display: none;">Continue Game</button>
+  </div>
+
+  <div id="gameArea">
+
+    <div id="scores">
+      <div class="player-score" id="red_score">
+        <h2>Player 1</h2>
+        <p id="redScore" class="score-display">0</p>
+      </div>
+      <div class="player-score" id="yellow_score">
+        <h2>Player 2</h2>
+        <p id="yellowScore" class="score-display">0</p>
+      </div>
     </div>
-    <div class="player-score" id="yellow_score">
-      <h2>Player 2</h2>
-      <p id="player2-score" class="score-display">0</p>
+
+
+    <table id="board">
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <div id="winnerScreen" style="display: none;">
+      <div class="messageContainer">
+        <h2 id="winnerMessage"></h2>
+        <button id="playAgainButton">Play Again</button>
+        <button id="resetScoreButton">Reset Score</button>
+      </div>
+    </div>
+
+
+    <button id="showRules">Show Rules </button>
+
+    <div id="rules" style="display: none;">
+      <div class="messageContainer">
+        <h2>Connect Four Rules:</h2>
+        <ul>
+          <li>The game is played on a vertical grid of 6 rows and 7 columns.</li>
+          <li>Players take turns dropping their colored discs from the top into any of the columns.</li>
+          <li>The goal is to connect four of your colored discs vertically, horizontally, or diagonally.</li>
+          <li>If all the cells in a particular column are filled and a player still wants to make a move,
+            they must choose a different column.</li>
+          <li>The Border of the field indicates whose players turn it is</li>
+        </ul>
+        <button id="closeRules">Close</button>
+      </div>
     </div>
   </div>
 
-
-  <table id="board">
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
-
-  <div id="winnerScreen" style="display: none;">
-    <div class="messageContainer">
-      <h2 id="winnerMessage"></h2>
-      <button id="playAgainButton">Play Again</button>
-      <button id="resetScoreButton">Reset Score</button>
-    </div>
-  </div>
-
-
-  <!-- <script src="script.js"></script> -->
   <script src="./script.js"></script>
+  <script src="./rules.js"></script>
+  <script src="./landing.js"></script>
+
 </body>
 
 </html>

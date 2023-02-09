@@ -1,45 +1,45 @@
 const board = document.querySelector('#board');
 let currentPlayer = 'Red';
-
+// True if there is relevant data on the LocalDB
+let gameLoaded = false;
 let score = {
     red: 0,
     yellow: 0
 }
 
-let player1ScoreDisplay = document.querySelector("#player1-score");
-let player2ScoreDisplay = document.querySelector("#player2-score");
-
-window.addEventListener("load", () => {
-    loadCurrentPlayer();
-    loadScore();
-    loadGame();
-    player1ScoreDisplay.innerHTML = score.red;
-    player2ScoreDisplay.innerHTML = score.yellow;
-});
+let player1ScoreDisplay = document.querySelector("#redScore");
+let player2ScoreDisplay = document.querySelector("#yellowScore");
 
 board.addEventListener('click', event => {
+    // Get Position of click
     const col = event.target.cellIndex;
     if (col === -1 || col === undefined) {
         return;
     }
 
+    // Go through the board, from the bottom, and find the first emty cell and chang it's color
     for (let i = board.rows.length - 1; i >= 0; i--) {
         if (!board.rows[i].cells[col].classList.contains('Red') &&
             !board.rows[i].cells[col].classList.contains('Yellow')) {
             board.rows[i].cells[col].classList.add(currentPlayer);
-            if (checkForWin(board, col, i)) {
+            // Check if player has won
+            if (checkForWin(board, col, i))
                 showWinnerScreen(currentPlayer, false);
-            } else if (checkForDraw(board)) {
+            // Else check if field is full
+            else if (checkForDraw(board))
                 showWinnerScreen(currentPlayer, true);
-            } else {
+            // Else let the next player go
+            else
                 changePlayer();
-            }
+
+            // Break out of loop to make code more efficient
             break;
         }
     }
 
 });
 
+// Swap player after every move
 function changePlayer() {
     board.classList.remove("currentPlayer" + currentPlayer);
     currentPlayer = (currentPlayer === 'Red') ? 'Yellow' : 'Red';
@@ -48,7 +48,9 @@ function changePlayer() {
     saveGame();
 }
 
+// 
 function checkForWin(board, col, row) {
+    // see what player we are checking for
     const color = board.rows[row].cells[col].className;
     let win = false;
 
@@ -59,25 +61,23 @@ function checkForWin(board, col, row) {
     }
 
     // check horizontal
-    win = checkLine(board, col, row, 1, 0, color) ||
-        checkLine(board, col, row, -1, 0, color);
+    win = checkLine(board, col, row, 1, 0, color) /*||
+        checkLine(board, col, row, -1, 0, color);*/
     if (win) {
         return true;
     }
 
     // check diagonals
     win = checkLine(board, col, row, 1, 1, color) ||
-        checkLine(board, col, row, -1, -1, color) ||
-        checkLine(board, col, row, 1, -1, color) ||
-        checkLine(board, col, row, -1, 1, color);
+        checkLine(board, col, row, 1, -1, color);
 
     return win;
 }
-
+// 0            1
 function checkLine(board, col, row, colIncrement, rowIncrement, color) {
-    let win = 1;
-    let i = col + colIncrement, j = row + rowIncrement;
+    let win = 1, i = col + colIncrement, j = row + rowIncrement;
 
+    // go direction untill: board end (max or 0) or no longer color
     while (i >= 0 && i < board.rows[0].cells.length &&
         j >= 0 && j < board.rows.length &&
         board.rows[j].cells[i].className === color) {
@@ -89,6 +89,7 @@ function checkLine(board, col, row, colIncrement, rowIncrement, color) {
     i = col - colIncrement;
     j = row - rowIncrement;
 
+    // go mirrowed direction untill: board end (max or 0) or no longer color
     while (i >= 0 && i < board.rows[0].cells.length &&
         j >= 0 && j < board.rows.length &&
         board.rows[j].cells[i].className === color) {
@@ -100,6 +101,7 @@ function checkLine(board, col, row, colIncrement, rowIncrement, color) {
     return win >= 4;
 }
 
+// Checks if the board is completly filled up
 function checkForDraw(board) {
     for (let i = 0; i < board.rows[0].cells.length; i++) {
         if (!board.rows[0].cells[i].classList.contains('Red') &&
@@ -110,7 +112,9 @@ function checkForDraw(board) {
     return true;
 }
 
-
+// ---------------------------------------------------------------
+// THIS AREA HANDELS A WIN / DRAW & THE RESET OF THE BOARD / SCORE
+// ---------------------------------------------------------------
 let winnerScreen = document.getElementById("winnerScreen");
 let winnerMessage = document.getElementById("winnerMessage");
 let playAgainButton = document.getElementById("playAgainButton");
@@ -129,6 +133,7 @@ resetScoreButton.addEventListener("click", function () {
     saveScore();
 });
 
+// Open a panel to show who won
 function showWinnerScreen(player, draw) {
     changePlayer();
     deleteGame();
@@ -150,7 +155,7 @@ function showWinnerScreen(player, draw) {
     saveScore();
 }
 
-
+// Reset Boar by clearing all the classes
 function resetBoard() {
     // Reset all cells to be empty
     for (let row = 0; row < 6; row++) {
@@ -165,6 +170,9 @@ function resetBoard() {
 }
 
 
+// ------------------------------------------------------------------
+// THIS PART SAVES, READS, AND RESETS THE LOCAL DB WITH THE GAME DATA
+// ------------------------------------------------------------------
 function saveGame() {
     localStorage.setItem("game", JSON.stringify(board.innerHTML));
 }
@@ -189,6 +197,8 @@ function loadScore() {
     const scoreAsString = localStorage.getItem("score");
     if (scoreAsString) {
         score = JSON.parse(scoreAsString);
+        if (score.red != 0 || score.yellow != 0)
+            gameLoaded = true;
         console.log("Score Loaded!");
     }
 }
@@ -201,6 +211,7 @@ function loadCurrentPlayer() {
     let dbCurrentPlayer = localStorage.getItem("currentPlayer");
     if (dbCurrentPlayer) {
         currentPlayer = JSON.parse(dbCurrentPlayer);
+        board.classList.add("currentPlayer" + currentPlayer);
         console.log("Current Player Loaded!");
     }
 }

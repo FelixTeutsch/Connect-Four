@@ -1,0 +1,32 @@
+#rules {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: #f8f8f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+#rules h2 {
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+#rules ul {
+    font-size: 18px;
+    margin: 0 20px;
+}
+
+#rules div {
+    width: 400px;
+    padding: 2rem;
+}
+#rules button {
+    margin: 1rem;
+    width: fit-content;
+}
